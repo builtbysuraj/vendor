@@ -21,7 +21,7 @@ app.get("/vendors", async (req, res) => {
   }
 })
 
-app.post("/vendor", async (req, res) => {
+app.post("/vendors", async (req, res) => {
 
   const { vendorName, bankAccNum, bankName, addressLine1, addressLine2, city, country, zipCode } = req.body;
 
@@ -67,6 +67,19 @@ app.delete("/vendors/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error!", error: error.message })
+  }
+})
+
+app.patch("/vendors/:id", async (req, res) => {
+  try {
+    const vendor = await Vendor.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!vendor) {
+      return res.status(404).json({ message: 'No vendor found with this id' });
+    }
+    res.json(vendor);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error!", error: error.message });
   }
 })
 
