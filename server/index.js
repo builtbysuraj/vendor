@@ -57,6 +57,18 @@ app.get("/vendors/:id", async (req, res) => {
   }
 })
 
+app.delete("/vendors/:id", async (req, res) => {
+  try {
+    const vendor = await Vendor.findByIdAndDelete(req.params.id)
+    if (!vendor) {
+      return res.status(404).json({ message: "No vendor found with this id" })
+    }
+    res.json({ message: "Vendor deleted successfully!" })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error!", error: error.message })
+  }
+})
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
