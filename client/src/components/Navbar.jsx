@@ -33,7 +33,6 @@ export default function Navbar() {
           <Link style={{ textDecoration: "none" }} to={"/"}>
             <Typography
               variant="div"
-              component="a"
               sx={{
                 color: "white",
                 padding: "15px",
@@ -46,7 +45,6 @@ export default function Navbar() {
           <Link style={{ textDecoration: "none" }} to={"/add-vendor"}>
             <Typography
               variant="div"
-              component="a"
               sx={{
                 color: "white",
                 padding: "15px",

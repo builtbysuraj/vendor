@@ -1,5 +1,7 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material"
 import { useState } from "react"
+import { ToastContainer, toast } from "react-toastify"
+
 import { usePost } from "../hooks/usePost"
 
 export default function AddVendor() {
@@ -15,6 +17,7 @@ export default function AddVendor() {
   }
   const { postData, data, err } = usePost()
   const [input, setInput] = useState(InitialState)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -28,13 +31,18 @@ export default function AddVendor() {
     e.preventDefault()
     await postData(input)
     setInput(InitialState)
+    setIsSubmitted(true)
   }
-  if (data) {
-    console.log(data)
+
+  if (data && isSubmitted) {
+    setIsSubmitted(false)
+    console.log(data.message)
+    toast.success("Sucessful")
   }
 
   return (
     <>
+      <ToastContainer />
       <Box component="form" onSubmit={handleSubmit} autoComplete="off" m={5}>
         <Typography
           textAlign={"center"}
