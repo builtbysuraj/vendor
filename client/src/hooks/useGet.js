@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 export function useGet() {
   const [vendorData, setVendorData] = useState()
   const [error, setError] = useState()
-
   const fetchVendors = async () => {
     try {
       const res = await fetch(`http://localhost:3000/vendors`)
@@ -19,5 +18,5 @@ export function useGet() {
     fetchVendors()
   }, [])
 
-  return { vendorData, error }
+  return { vendorData, error, fetchVendors }
 }

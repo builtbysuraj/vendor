@@ -1,4 +1,6 @@
 import {
+  Box,
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -9,10 +11,17 @@ import {
 } from "@mui/material"
 import { Link as RouterLink } from "react-router-dom"
 
+import { useDelete } from "../hooks/useDelete"
 import { useGet } from "../hooks/useGet"
 
 export default function Vendors() {
-  const { vendorData, error } = useGet()
+  const { vendorData, fetchVendors, error } = useGet()
+  const { handleDelete } = useDelete()
+
+  const handleDeleteAndRefresh = async (id) => {
+    await handleDelete(id)
+    fetchVendors()
+  }
 
   const renderedData = vendorData?.map((ele) => (
     <TableRow
@@ -31,13 +40,23 @@ export default function Vendors() {
       <TableCell align="right">
         <RouterLink
           style={{ textDecoration: "none", color: "blue" }}
-          to={`/${ele._id}`}
+          to={`/edit/${ele._id}`}
         >
           Edit
         </RouterLink>
       </TableCell>
       <TableCell align="right">
-        <RouterLink style={{ textDecoration: "none", color: "red" }}>
+        <RouterLink
+          to="#"
+          style={{ textDecoration: "none", color: "red" }}
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to delete this vendor?")
+            ) {
+              handleDeleteAndRefresh(ele._id)
+            }
+          }}
+        >
           Delete
         </RouterLink>
       </TableCell>
@@ -46,27 +65,40 @@ export default function Vendors() {
 
   return (
     <>
-      <TableContainer component={Paper} style={{ fontSize: "2rem" }}>
-        <Table>
-          <TableHead>
-            <TableRow
-              sx={{
-                "& .MuiTableCell-root": {
-                  fontSize: "1.1rem",
-                  fontWeight: "bold ",
-                },
-              }}
-            >
-              <TableCell>Vendor Name</TableCell>
-              <TableCell align="right">Bank Acc Number</TableCell>
-              <TableCell align="right">Bank Name</TableCell>
-              <TableCell align="right">Edit</TableCell>
-              <TableCell align="right">Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{renderedData}</TableBody>
-        </Table>
-      </TableContainer>
+      {vendorData ? (
+        <TableContainer component={Paper} style={{ fontSize: "2rem" }}>
+          <Table>
+            <TableHead>
+              <TableRow
+                sx={{
+                  "& .MuiTableCell-root": {
+                    fontSize: "1.1rem",
+                    fontWeight: "bold ",
+                  },
+                }}
+              >
+                <TableCell>Vendor Name</TableCell>
+                <TableCell align="right">Bank Acc Number</TableCell>
+                <TableCell align="right">Bank Name</TableCell>
+                <TableCell align="right">Edit</TableCell>
+                <TableCell align="right">Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{renderedData}</TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "80vh",
+          }}
+        >
+          <CircularProgress size={"50px"} />
+        </Box>
+      )}
     </>
   )
 }

@@ -3,7 +3,6 @@ import { useState } from "react"
 export function usePost() {
   const [data, setData] = useState(null)
   const [err, setErr] = useState(null)
-console.log("first")
   const postData = async ({
     vendorName,
     bankAccNum,
@@ -14,7 +13,7 @@ console.log("first")
     country,
     zipCode,
   }) => {
-    fetch("http://localhost:3000/vendor", {
+    fetch("http://localhost:3000/vendors", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
