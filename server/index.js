@@ -7,9 +7,20 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect(URL, { useNewUrlParser: true })
-  .then(() => console.log('Database successfully connected'))
-  .catch(error => console.error('Database could not be connected:', error));
+// mongoose.connect(URL, { useNewUrlParser: true })
+//   .then(() => console.log('Database successfully connected'))
+//   .catch(error => console.error('Database could not be connected:', error));
+
+mongoose.Promise = global.Promise;
+mongoose.connect(URL, {
+  useNewUrlParser: true
+}).then(() => {
+  console.log('Database sucessfully connected')
+},
+  error => {
+    console.log('Database could not be connected: ' + error)
+  }
+)
 
 app.get("/vendors", async (req, res) => {
   try {
