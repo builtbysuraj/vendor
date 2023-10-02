@@ -37,7 +37,7 @@ app.post("/vendors", async (req, res) => {
   })
   try {
     const savedVendor = await vendor.save()
-    res.status(201).json(savedVendor)
+    res.status(201).json({ message: "Success", data: savedVendor })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: "Server Error!", error: error.message })
