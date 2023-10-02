@@ -13,7 +13,7 @@ export function usePost() {
     country,
     zipCode,
   }) => {
-    fetch("http://localhost:3000/vendors", {
+    fetch("https://vendor-react.onrender.com/vendors", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

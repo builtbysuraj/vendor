@@ -5,7 +5,7 @@ export function useGet() {
   const [error, setError] = useState()
   const fetchVendors = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/vendors`)
+      const res = await fetch(`https://vendor-react.onrender.com/vendors`)
       if (!res.ok) throw new Error(`Responce is not OK!`)
       const data = await res.json()
       setVendorData(data)
@@ -25,7 +25,7 @@ export function useGetById() {
   const [data, setData] = useState()
   const fetchById = (id) => {
     useEffect(() => {
-      fetch(`http://localhost:3000/vendors/${id}`)
+      fetch(`https://vendor-react.onrender.com/vendors/${id}`)
         .then((res) => res.json())
         .then((data) => setData(data))
     }, [])

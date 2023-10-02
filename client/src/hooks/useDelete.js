@@ -1,7 +1,7 @@
 export function useDelete() {
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:3000/vendors/${id}`, {
+    await fetch(`https://vendor-react.onrender.com/vendors/${id}`, {
       method: "DELETE",
     })
   }

@@ -6,7 +6,7 @@ export function usePatch() {
 
   const patchData = async (input, id) => {
     try {
-      const response = await fetch(`http://localhost:3000/vendors/${id}`, {
+      const response = await fetch(`https://vendor-react.onrender.com/vendors/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
