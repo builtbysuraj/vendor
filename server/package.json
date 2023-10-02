@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "npx nodemon"
+    "dev": "npx nodemon",
+    "build": "npm i"
   },
   "dependencies": {
     "cors": "^2.8.5",
