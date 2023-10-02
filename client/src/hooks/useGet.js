@@ -20,3 +20,15 @@ export function useGet() {
 
   return { vendorData, error, fetchVendors }
 }
+
+export function useGetById() {
+  const [data, setData] = useState()
+  const fetchById = (id) => {
+    useEffect(() => {
+      fetch(`http://localhost:3000/vendors/${id}`)
+        .then((res) => res.json())
+        .then((data) => setData(data))
+    }, [])
+  }
+  return { data, fetchById }
+}

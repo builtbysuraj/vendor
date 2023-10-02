@@ -1,7 +1,10 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
+import { useParams } from "react-router-dom"
 
+import { useGetById } from "../hooks/useGet"
+import { usePatch } from "../hooks/usePatch"
 import { usePost } from "../hooks/usePost"
 
 export default function AddVendor() {
@@ -16,8 +19,11 @@ export default function AddVendor() {
     zipCode: "",
   }
   const { postData, data, err } = usePost()
+  const { patchData } = usePatch()
+  const { fetchById, data: idData } = useGetById()
   const [input, setInput] = useState(InitialState)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const { id } = useParams()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,10 +32,22 @@ export default function AddVendor() {
       [name]: value,
     })
   }
+  if (id) {
+    fetchById(id)
+  }
+  useEffect(() => {
+    if (idData) {
+      setInput(idData)
+    }
+  }, [idData])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await postData(input)
+    if (id) {
+      await patchData(input, id)
+    } else {
+      await postData(input)
+    }
     setInput(InitialState)
     setIsSubmitted(true)
   }
